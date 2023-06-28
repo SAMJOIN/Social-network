@@ -1,8 +1,3 @@
-.profileInfo {
-  grid-area: mainContent;
-  width: 1000px;
-  height: 100%;
-}
 
 .profileImg {
   height: 200px;
@@ -14,7 +9,6 @@
   border-radius: 150px;
   background-size: 200px 200px;
   border: 4px solid white;
-  background-image: url('https://anime-fans.ru/wp-content/uploads/2021/05/Kreativnye-anime-avatarki-dlya-stima-v-luchshem-kachestve_01.jpg');
 }
 
 .profileText {
@@ -26,11 +20,12 @@
 
 .myPosts {
   font-size: 30px;
+  margin-bottom: 100px;
 }
 
 .item {
   display: block;
-  height: 200px;
+  height: max-content;
   width: 100%;
   background-color: white;
   border-radius: 20px;
@@ -39,7 +34,7 @@
 }
 
 .profileBar {
-  height: 455px;
+  height: 460px;
   border-radius: 20px;
   border: 1px solid rgb(193, 193, 193);
   background-image: url('https://cdnb.artstation.com/p/assets/images/images/042/712/079/large/sylvain-sarrailh-raimucovertartjpg.jpg?1635255496');
@@ -52,7 +47,7 @@
 }
 
 .btn {
-  margin-left: 900px;
+  margin-left: 700px;
   font-size: 20px;
 }
 
@@ -77,4 +72,19 @@
   border-radius: 90px;
   border: 2px solid rgb(193, 193, 193);
   margin: 0;
+}
+
+.content {
+  margin-left: 30px;
+  font-size: 25px;
+}
+
+.like {
+  font-size: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.like::before {
+  content: '❤';
 }

@@ -1,0 +1,16 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    border-radius: 20px;
+    border: 1px solid rgb(193, 193, 193);
+    padding: 20px;
+    background-color: white;
+}
+
+.dialogsList {}
+
+.dialogsList .dialog {}
+
+.messageList {}
+
+.messageList .message {}
