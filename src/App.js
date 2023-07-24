@@ -4,11 +4,11 @@ import './Components/Header/Header.css';
 import Header from './Components/Header/Header';
 import Nav from './Components/Navigation/Nav';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
-import Dialogs from './Components/Dialogs/Dialogs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
+import DialogsContainer from './Components/Dialogs/DialogsContainer';
 
 function App(props) {
   return (
@@ -16,16 +16,17 @@ function App(props) {
       <div className="App">
 
         <Header />
-        <Nav state={props.state.friends}/>
+        <Nav state={props.state.friendsPage} />
         <div className='app-wrapper-content'>
           <Routes>
             <Route path='/Dialogs/*'
-              element={<Dialogs
-                messages={props.state.dialogsPage.messages}
-                dialogs={props.state.dialogsPage.dialogs} />} />
+              element={<DialogsContainer
+                store={props.store}
+              />} />
             <Route path='/Profile/*'
               element={<ProfilePage
-                posts={props.state.profilePage.posts} />} />
+                store={props.store}
+              />} />
             <Route path='/News/*' Component={News} />
             <Route path='/Music/*' Component={Music} />
             <Route path='Settings/*' Component={Settings} />

@@ -20,7 +20,7 @@ function Nav(props) {
                 <NavLink to='/Settings'>Settings</NavLink>
             </div>
             <div>
-                <Friends state={props.state}/>
+                <Friends state={props.state} />
             </div>
         </nav>
     );
