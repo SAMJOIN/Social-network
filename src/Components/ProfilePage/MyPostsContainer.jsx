@@ -1,22 +1,27 @@
 import React from 'react';
 import MyPosts from './MyPosts';
 import { addPostActionCreator, updateNewPostTextActionCreator } from '../../Rdeux/profile-reducer';
+import {connect} from 'react-redux'
 
-function MyPostsContainer(props) { // В пропсах posts
-
-    let state = props.store.getState();
-
-    let posts = state.profilePage.posts;
-    
-    function addNewPost() {  // Функция добавления поста 
-        props.store.dispatch(addPostActionCreator());
+const mapStateToProps = (state) => { // делаем объект с пропсами для презентационной компоненты MyPosts
+    return {
+        state: state,
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
     }
-
-    function onChange(text) { // Функция, которая прокидывает обновление textarea в state
-        props.store.dispatch(updateNewPostTextActionCreator(text));
-    }
-
-
-    return <MyPosts newPostText={state.newPostText} posts={posts} addPost={addNewPost} onTextChange={onChange}/>
 }
+
+const mapDispatchToProps = (dispatch) => { // делаем объект с колбеками для презентационной компоненты MyPosts
+    return {
+        addNewPost: () => {
+            dispatch(addPostActionCreator());
+        },
+        onChange: (text) => {
+            dispatch(updateNewPostTextActionCreator(text));
+        }
+    }
+}
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+
 export default MyPostsContainer;

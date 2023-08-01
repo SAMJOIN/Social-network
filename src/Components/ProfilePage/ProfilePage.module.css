@@ -16,6 +16,7 @@
   border-radius: 19px;
   font-size: 28px;
   padding-left: 300px;
+  height: 200px;
 }
 
 .myPosts {
@@ -34,7 +35,7 @@
 }
 
 .profileBar {
-  height: 460px;
+  height: max-content;
   border-radius: 20px;
   border: 1px solid rgb(193, 193, 193);
   background-image: url('https://cdnb.artstation.com/p/assets/images/images/042/712/079/large/sylvain-sarrailh-raimucovertartjpg.jpg?1635255496');

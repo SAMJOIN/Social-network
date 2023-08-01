@@ -9,6 +9,7 @@ import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
+import UsersContainer from './Components/Users/UsersContainer';
 
 function App(props) {
   return (
@@ -19,14 +20,9 @@ function App(props) {
         <Nav state={props.state.friendsPage} />
         <div className='app-wrapper-content'>
           <Routes>
-            <Route path='/Dialogs/*'
-              element={<DialogsContainer
-                store={props.store}
-              />} />
-            <Route path='/Profile/*'
-              element={<ProfilePage
-                store={props.store}
-              />} />
+            <Route path='/Dialogs/*' element={<DialogsContainer />} />
+            <Route path='/Profile/*' element={<ProfilePage />} />
+            <Route path='/Users/*' element={<UsersContainer />} />
             <Route path='/News/*' Component={News} />
             <Route path='/Music/*' Component={Music} />
             <Route path='Settings/*' Component={Settings} />

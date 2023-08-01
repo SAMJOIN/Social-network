@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Nav.module.css'
 import Friends from './Friends/Friends';
+import FriendsContainer from './Friends/FriendsContainer';
 function Nav(props) {
     return (
         <nav className={styles.nav}>
@@ -9,6 +10,9 @@ function Nav(props) {
             </div>
             <div className={styles.item}>
                 <NavLink to='/Profile'>Profile</NavLink>
+            </div>
+            <div className={styles.item}>
+                <NavLink to='/Users'>Users</NavLink>
             </div>
             <div className={styles.item}>
                 <NavLink to='/News'>News</NavLink>
@@ -20,7 +24,7 @@ function Nav(props) {
                 <NavLink to='/Settings'>Settings</NavLink>
             </div>
             <div>
-                <Friends state={props.state} />
+                <FriendsContainer />
             </div>
         </nav>
     );

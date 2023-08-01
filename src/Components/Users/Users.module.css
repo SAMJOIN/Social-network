@@ -1,0 +1,47 @@
+.userContainer {
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-template-areas: 'img' 'info';
+}
+
+.userImg {
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+    background-size: 200px 200px;
+    display: block;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
+
+.btnAndImg {
+    grid-area: 'img';
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: max-content;
+    text-align: center;
+}
+
+.followBtn {
+    width: 150px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 40px;
+}
+
+.followBtn:hover {
+    transform: scale(0.98);
+    transition: 0.3s;
+}
+
+.userInfo {
+    grid-area: 'info';
+    margin-left: 20px;
+}

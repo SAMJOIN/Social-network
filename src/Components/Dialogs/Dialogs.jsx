@@ -7,8 +7,6 @@ function Dialogs(props) { // В пропсах messages и dialogs
 
     let state = props.state;
 
-    let newMessage = props.state.newMessage;
-
     let dialogsElement = state.dialogsPage.dialogs.map((el) => <Dialog id={el.id} name={el.name} />) // Преобразование массива объектов в массив элементов
 
     let messagesElement = state.dialogsPage.messages.map((el) => <Message id={el.id} message={el.message} />) // Преобразование массива объектов в массив элементов
@@ -16,13 +14,12 @@ function Dialogs(props) { // В пропсах messages и dialogs
     let textArea = React.createRef();
 
     function addMessage() {
-        props.addNewMessage();
-        textArea.current.value = '';
+        props.addMessage();
     }
 
     function onMessageChange(event) {
         let body = event.target.value;
-        props.onChange(body);
+        props.onMessageChange(body);
     }
     
 
@@ -37,7 +34,7 @@ function Dialogs(props) { // В пропсах messages и dialogs
                     <textarea className={styles.textarea}
                         ref={textArea}
                         onChange={onMessageChange}
-                        value={newMessage}
+                        value={props.newMessage}
                         placeholder='Enter your message'    
                     />
                     <button className={styles.btn} onClick={addMessage}>Send message</button>

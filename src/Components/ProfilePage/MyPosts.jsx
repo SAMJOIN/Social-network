@@ -9,13 +9,12 @@ function MyPosts(props) {
     let textArea = React.createRef();
     
     function addPost() {  // Функция добавления поста 
-        props.addPost();
-        textArea.current.value = '';
+        props.addNewPost();
     }
 
     function onTextChange() { // Функция, которая прокидывает обновление textarea в state
         let text = textArea.current.value;
-        props.onTextChange(text);
+        props.onChange(text);
     }
 
     let postsElements = posts.map((el) => (<Post message={el.message} like={el.likeCount} />))
