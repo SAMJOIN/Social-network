@@ -4,7 +4,7 @@ import Friend from "./Friend"
 
 const mapStateToProps = (state) => {
     return {
-        friendsList: state.friendsPage.friends.map( friend => <Friend img={friend.img} name={friend.name}/>)
+        friendsList: state.friendsPage.friends.map( friend => <Friend img={friend.img} name={friend.name} key={friend.id}/>)
     }
 }
 

@@ -17,7 +17,7 @@ function MyPosts(props) {
         props.onChange(text);
     }
 
-    let postsElements = posts.map((el) => (<Post message={el.message} like={el.likeCount} />))
+    let postsElements = posts.map((el) => (<Post message={el.message} like={el.likeCount} key={el.id} />))
 
     return (
         <div className={styles.myPosts}>

@@ -1,6 +1,9 @@
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
+const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING'
 
 // let initState = {
 //     users: [
@@ -11,7 +14,11 @@ const SET_USERS = 'SET-USERS'
 // }
 
 let initState = {
-    users: []
+    users: [],
+    currentPage: 1,
+    totalUsersCount: 0, // Ручной ввод, т.к. на сервере слишком много пользователей
+    pageSize: 10,
+    isFetching: false 
 };
 
 const usersReducer = (state = initState, action) => {
@@ -35,29 +42,52 @@ const usersReducer = (state = initState, action) => {
                 })
             }
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_COUNT:
+            return {...state, totalUsersCount: action.totalCount}
+        case TOOGLE_IS_FETCHING:
+            return {...state, isFetching: action.isFetching}
         default:
             return state;
     }
 }
 
-export const followAC = (userId) => {
+export const follow = (userId) => {
     return {
         type: FOLLOW,
         userId: userId
     }
 }
-export const unfollowAC = (userId) => {
+export const unfollow = (userId) => {
     return {
         type: UNFOLLOW,
         userId: userId
     }
 }
-export const setUsersAC = (users) => {
-    debugger;
+export const setUsers = (users) => {
     return {
         type: SET_USERS,
         users: users
+    }
+}
+export const setCurrentPage = (currentPage) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        currentPage: currentPage
+    }
+}
+export const setTotalCount = (count) => {
+    return {
+        type: SET_TOTAL_COUNT,
+        totalCount: count
+    }
+}
+export const setFetching = (isFetching) => {
+    return {
+        type: TOOGLE_IS_FETCHING,
+        isFetching
     }
 }
 

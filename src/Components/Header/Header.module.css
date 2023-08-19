@@ -2,3 +2,7 @@
     grid-area: header;
     margin-left: 200px;
   }
+
+.auth_block {
+  float: right;
+}

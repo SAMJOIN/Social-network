@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Nav.module.css'
-import Friends from './Friends/Friends';
 import FriendsContainer from './Friends/FriendsContainer';
 function Nav(props) {
     return (
