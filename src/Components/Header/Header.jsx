@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './Header.module.css'
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+
 
 function Header(props) {
-    return(
-    <header className={styles.header}>
-        <img height={200} src='./../react.png'/>
-        <div className={styles.auth_block}>
-            {props.isAuth ? props.login : <NavLink to={'/login'} >Login</NavLink> }
-        </div>
-    </header>);
+    return (
+        <header className={styles.header}>
+            <div className={styles.auth_block}>
+                {props.isAuth && <div>{props.login} <button onClick={props.logout}>Log out</button> </div>}
+            </div>
+        </header>);
 }
 
 export default Header;

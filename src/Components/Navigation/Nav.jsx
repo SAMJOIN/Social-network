@@ -8,7 +8,7 @@ function Nav(props) {
                 <NavLink to='/Dialogs'>Dialogs</NavLink>
             </div>
             <div className={styles.item}>
-                <NavLink to='/Profile'>Profile</NavLink>
+                <NavLink to={'/Profile/29844'}>Profile</NavLink>
             </div>
             <div className={styles.item}>
                 <NavLink to='/Users'>Users</NavLink>

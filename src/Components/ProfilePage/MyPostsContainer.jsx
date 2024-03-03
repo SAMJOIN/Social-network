@@ -1,24 +1,21 @@
-import React from 'react';
 import MyPosts from './MyPosts';
-import { addPostActionCreator, updateNewPostTextActionCreator } from '../../Rdeux/profile-reducer';
+import { addPostActionCreator} from '../../Rdeux/profile-reducer';
 import {connect} from 'react-redux'
+import { getNewPostText, getPosts } from '../../Rdeux/my-post-selectors';
 
 const mapStateToProps = (state) => { // делаем объект с пропсами для презентационной компоненты MyPosts
     return {
         state: state,
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+        posts: getPosts(state),
+        newPostText: getNewPostText(state)
     }
 }
 
 const mapDispatchToProps = (dispatch) => { // делаем объект с колбеками для презентационной компоненты MyPosts
     return {
-        addNewPost: () => {
-            dispatch(addPostActionCreator());
+        addNewPost: (newPostBody) => {
+            dispatch(addPostActionCreator(newPostBody));
         },
-        onChange: (text) => {
-            dispatch(updateNewPostTextActionCreator(text));
-        }
     }
 }
 

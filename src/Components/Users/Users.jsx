@@ -1,12 +1,11 @@
 import styles from './Users.module.css'
 import noPhoto from '../../assets/images/user.png'
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import { userAPI } from '../../api/api';
 
 let Users = (props) => {
     let pages = [];
     let visiblePages = [];
+    let usersCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     if (props.currentPage - 4 < 3) {
 
@@ -15,20 +14,20 @@ let Users = (props) => {
         }
         visiblePages.push('...');
     }
-    else if (props.currentPage + 4 > props.totalUsersCount) {
+    else if (props.currentPage + 4 > usersCount) {
         visiblePages.push('...');
-        for (let i = props.currentPage - 4; i < props.totalUsersCount; i++) {
+        for (let i = props.currentPage - 4; i < usersCount; i++) {
             visiblePages.push(i);
         }
     }
-    else if (props.currentPage - 4 > 2 || props.currentPage + 4 < props.totalUsersCount) {
+    else if (props.currentPage - 4 > 2 || props.currentPage + 4 < usersCount) {
         visiblePages.push('...');
         for (let i = props.currentPage - 4; i < props.currentPage + 5; i++)
             visiblePages.push(i);
         visiblePages.push('...');
     }
 
-    pages = [1, ...visiblePages, props.totalUsersCount];
+    pages = [1, ...visiblePages, usersCount];
 
     return (
         <div>
@@ -53,25 +52,12 @@ let Users = (props) => {
                             <NavLink to={'/Profile/' + user.id}>
                                 <img src={user.photos.large != null ? user.photos.large : noPhoto} className={styles.userImg} />
                             </NavLink>
-                            {user.followed ? <button className={styles.followBtn} onClick={() => {
-                                userAPI.getUnfollow(user.id)
-                                    .then(response => {
-                                        if (response.resultCode === 0) {
-                                            props.unfollow(user.id)
-                                        }
-                                    });
-                            }
-                            }
-                            >Unfollow</button> :
-                                <button className={styles.followBtn} onClick={() => {
-                                    userAPI.getFollow(user.id)
-                                        .then(response => {
-                                            if (response.resultCode === 0) {
-                                                props.follow(user.id)
-                                            }
-                                        });
-                                }
-                                }>Follow</button>}
+                            {user.followed
+                                ? <button disabled={props.followingInProgress.some(id => id === user.id)} className={styles.followBtn}
+                                    onClick={() => { props.unfollowThunk(user.id) }}>Unfollow</button>
+                                :
+                                <button disabled={props.followingInProgress.some(id => id === user.id)} className={styles.followBtn}
+                                    onClick={() => { props.followThunk(user.id); }}>Follow</button>}
                         </div>
                         <div className={styles.userInfo}>
                             <p>Name: {user.name}</p>

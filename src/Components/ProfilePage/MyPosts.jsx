@@ -1,20 +1,14 @@
 import React from 'react';
 import styles from './../ProfilePage/ProfilePage.module.css'
 import Post from './Post';
+import { Field, reduxForm } from 'redux-form';
 
-function MyPosts(props) { 
+function MyPosts(props) {
 
     let posts = props.posts;
 
-    let textArea = React.createRef();
-    
-    function addPost() {  // Функция добавления поста 
-        props.addNewPost();
-    }
-
-    function onTextChange() { // Функция, которая прокидывает обновление textarea в state
-        let text = textArea.current.value;
-        props.onChange(text);
+    function addPost(values) {  // Функция добавления поста 
+        props.addNewPost(values.newPostBody);
     }
 
     let postsElements = posts.map((el) => (<Post message={el.message} like={el.likeCount} key={el.id} />))
@@ -23,11 +17,7 @@ function MyPosts(props) {
         <div className={styles.myPosts}>
             <div className={styles.label}>My posts</div>
             <div className={styles.newPostArea}>
-                <textarea onChange={onTextChange} // При изменении будем отправлять данные в state
-                    className={styles.textArea}
-                    ref={textArea}
-                    value={props.newPostText} /> {/* Делаем значение фиксированным, равным newPostText из state */}
-                <button className={styles.btn} onClick={addPost}>Add post</button>
+                <NewPostFormRedux onSubmit={addPost} />
             </div>
             <div className="posts">
                 {postsElements}
@@ -35,4 +25,16 @@ function MyPosts(props) {
         </div>
     );
 }
+
+const NewPostForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field className={styles.textArea} component='textarea' name='newPostBody' placeholder='Enter message' />
+            <button className={styles.btn} type='submit'>Add</button>
+        </form>
+    );
+}
+
+const NewPostFormRedux = reduxForm({ form: 'newPostForm' })(NewPostForm);
+
 export default MyPosts;

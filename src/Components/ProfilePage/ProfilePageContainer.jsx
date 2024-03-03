@@ -1,13 +1,15 @@
 import React from 'react';
 import ProfilePage from './ProfilePage';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { setUserProfile } from '../../Rdeux/profile-reducer';
+import { getUserProfile, getStatus, updateStatus } from '../../Rdeux/profile-reducer';
 import { useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose  } from 'redux';
+
 
 export function withRouter(Children) {
     return (props) => {
-
         const match = { params: useParams() };
         return <Children {...props} match={match} />
     }
@@ -16,27 +18,32 @@ export function withRouter(Children) {
 class ProfilePageContainer extends React.Component {
 
     componentDidMount() {
-        debugger;
         let userId = this.props.match.params.userId;
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-            debugger;
-            this.props.setUserProfile(response.data);
-        });
+        this.props.getUserProfile(userId);
+        this.props.getStatus(userId);
     }
 
     render() {
-        return <ProfilePage {...this.props} />
+        return <ProfilePage {...this.props} status={this.props.status} updateStatus={this.props.updateStatus}/>
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 let mapDispatchToProps = {
-    setUserProfile
+    getUserProfile,
+    getStatus,
+    updateStatus
 }
 
+let ProfilePageComponent = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    withAuthRedirect
+)(ProfilePageContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfilePageContainer));
+export default ProfilePageComponent;

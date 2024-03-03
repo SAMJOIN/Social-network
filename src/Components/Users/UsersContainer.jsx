@@ -1,34 +1,24 @@
 
 import { connect } from 'react-redux'
 import Users from "./Users"
-import { setCurrentPage, setTotalCount, setFetching, follow, setUsers, unfollow } from "../../Rdeux/users-reducer"
+import { setCurrentPage, follow, unfollow} from "../../Rdeux/users-reducer"
 import React from "react"
 import Loader from "../Loader/Loader"
-import { userAPI } from '../../api/api'
+import { getUsers, followThunk, unfollowThunk } from '../../Rdeux/users-reducer'
+import { compose } from 'redux'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
 class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
         if (this.props.users.length === 0) {
-            this.props.setFetching(true);
-            userAPI.getUsers(this.props.currentPage, this.props.pageSize)
-                .then(response => {
-                    debugger;
-                    this.props.setFetching(false);
-                    this.props.setUsers(response.items); // Функция для получения и установлеения пользователей в state
-                    this.props.setTotalCount(response.totalCount); // - Функция, которая получает с сервера реальное количество пользователей
-                });
+            this.props.getUsers(this.props.currentPage, this.props.pageSize)
         }
     }
 
     onPageChange = (p) => {
-        this.props.setFetching(true);
         this.props.setCurrentPage(p);
-        userAPI.getUsers(p, this.props.pageSize)
-            .then(response => {
-                this.props.setFetching(false);
-                this.props.setUsers(response.items);
-            });
+        this.props.getUsers(p, this.props.pageSize)
     }
 
     render() {
@@ -37,10 +27,14 @@ class UsersAPIComponent extends React.Component {
                 <Users
                     currentPage={this.props.currentPage}
                     totalUsersCount={this.props.totalUsersCount}
+                    pageSize = {this.props.pageSize}
                     onPageChange={this.onPageChange}
                     users={this.props.users}
                     unfollow={this.props.unfollow}
-                    follow={this.props.follow} />
+                    follow={this.props.follow}
+                    followThunk={this.props.followThunk}
+                    unfollowThunk={this.props.unfollowThunk} 
+                    followingInProgress={this.props.followingInProgress}/>
             }
         </>
     }
@@ -52,20 +46,24 @@ const mapStateToProps = (state) => {
         currentPage: state.usersPage.currentPage,
         totalUsersCount: state.usersPage.totalUsersCount,
         pageSize: state.usersPage.pageSize,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
 const mapDispatchToProps = {
     follow,
     unfollow,
-    setUsers,
     setCurrentPage,
-    setTotalCount,
-    setFetching
+    getUsers,
+    followThunk,
+    unfollowThunk
 }
 
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent);
+const UsersContainer = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(UsersAPIComponent)
 
 export default UsersContainer;
